@@ -12,5 +12,4 @@ class simpleNet:
         z = self.predict(x)
         y = f.softmax(z)
         loss = f.cross_entropy_error(y, t)
-
         return loss
