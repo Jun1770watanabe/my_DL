@@ -32,7 +32,7 @@ class TwoLayerNet:
 
     def predict(self, x):
         for layer in self.layers.values():
-            x = layer.forward()
+            x = layer.forward(x)
         return x
 
     def loss(self, x, t):
@@ -42,7 +42,7 @@ class TwoLayerNet:
     def accuracy(self, x, t):
         y = self.predict(x)
         y = np.argmax(y, axis=1)
-        if t.dim != 1:
+        if t.ndim != 1:
             t = np.argmax(t, axis=1)
         accuracy = np.sum(y == t) / float(x.shape[0])
         return accuracy
@@ -50,10 +50,10 @@ class TwoLayerNet:
     def numerical_gradient(self, x, t):
         loss_W = lambda W: self.loss(x, t)
         grads = {}
-        grads['W1'] = numerical_gradient(loss_W, self.params['W1'])
-        grads['b1'] = numerical_gradient(loss_W, self.params['b1'])
-        grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
-        grads['b2'] = numerical_gradient(loss_W, self.params['b2'])
+        grads['W1'] = f.numerical_gradient(loss_W, self.params['W1'])
+        grads['b1'] = f.numerical_gradient(loss_W, self.params['b1'])
+        grads['W2'] = f.numerical_gradient(loss_W, self.params['W2'])
+        grads['b2'] = f.numerical_gradient(loss_W, self.params['b2'])
         return grads
 
     def gradient(self, x, t):
@@ -73,4 +73,3 @@ class TwoLayerNet:
         grads['b2'] = self.layers["Affine2"].db
         
         return grads
-        
