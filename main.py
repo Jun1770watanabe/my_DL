@@ -1,10 +1,14 @@
 import numpy as np
 from dataset.mnist import load_mnist
 from network import TwoLayerNet
+from optimizer import SDG
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
 nw = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
+optim = SDG()
+print(optim)
+exit()
 
 iters_num = 10000
 train_size = x_train.shape[0]
